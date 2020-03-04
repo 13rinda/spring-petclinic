@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'mvn clean' 
+                sh './mvnw clean' 
             }
         }
          stage('test') {
             steps {
-                sh 'mvn test' 
+                sh './mvnw test' 
             }
         }
         stage('package') {
@@ -18,7 +18,7 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh 'mvn deploy' 
+                sh './mvnw deploy' 
             }
         }
     }
