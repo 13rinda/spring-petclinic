@@ -1,14 +1,24 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('build') {
+            steps {
+                sh 'mvn clean' 
+            }
+        }
+         stage('test') {
+            steps {
+                sh 'mvn test' 
+            }
+        }
+        stage('package') {
             steps {
                 sh './mvnw package' 
             }
         }
-         stage('Test') {
+        stage('deploy') {
             steps {
-                sh './mvnw package' 
+                sh 'mvn deploy' 
             }
         }
     }
