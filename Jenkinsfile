@@ -32,13 +32,11 @@ pipeline
 		        {
 		        	expression{(env.BRANCH_NAME == 'master')}
 		        }
-			        stage('deploy')
-			         {
 			            steps 
 			            {
 			                sh 'mvn deploy' 
 			            }
-			         }
+			         
 		}
        
  	}
