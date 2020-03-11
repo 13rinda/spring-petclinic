@@ -3,24 +3,37 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh './mvnw clean' 
+                sh 'mvn clean' 
             }
         }
          stage('test') {
             steps {
-                sh './mvnw test' 
+                sh 'mvn test' 
             }
         }
         stage('package') {
             steps {
-                sh './mvnw package' 
+                sh 'mvn package' 
             }
         }
-        stage('deploy') {
+        stage('expression-branch') {
+    agent label:'some-node'
+    when {
+    expression {
+        return env.BRANCH_NAME != 'master';
+        }
+    }
+    steps {
+       stage('deploy') {
             steps {
-                sh './mvnw deploy' 
+                sh 'mvn deploy' 
             }
         }
+    }
+}
+
+
+
     }
 }
 
