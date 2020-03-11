@@ -1,26 +1,42 @@
 pipeline {
     agent any
+   
+
     stages {
         stage('build') {
             steps {
-                sh './mvnw clean' 
+                sh 'mvn clean' 
             }
         }
          stage('test') {
             steps {
-                sh './mvnw test' 
+                sh 'mvn test' 
             }
         }
         stage('package') {
             steps {
-                sh './mvnw package' 
+                sh 'mvn package' 
             }
         }
+        
+	stage('expression-branch') {
+    agent label:'some-node'
+    when {
+    expression {
+        return env.BRANCH_NAME != 'master';
+        }
+    }
+    steps {
+        echo 'run this stage - when branch is not equal to master'
         stage('deploy') {
             steps {
-                sh './mvnw deploy' 
+                sh 'mvn deploy' 
             }
         }
+    }
+}
+
+        
     }
 }
 
