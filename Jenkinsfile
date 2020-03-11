@@ -25,17 +25,22 @@ pipeline
                 sh 'mvn package' 
             }
         }
-        
-        if (env.BRANCH_NAME == 'master')
-        {
-	        stage('deploy')
-	         {
-	            steps 
-	            {
-	                sh 'mvn deploy' 
-	            }
-	        }
-        }
+     	
+     	stage('deploy')
+     	{
+		        when
+		        {
+		        	expression{(env.BRANCH_NAME == 'master')}
+		        }
+			        stage('deploy')
+			         {
+			            steps 
+			            {
+			                sh 'mvn deploy' 
+			            }
+			         }
+		}
+       
  	}
 }
 
